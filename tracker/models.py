@@ -28,6 +28,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name or self.url
 
+    def latest_price(self):
+        entry = self.price_history.first()  # ordered by -scraped_at already
+        return entry.price if entry else None
+
 
 class PriceHistory(models.Model):
     product = models.ForeignKey(
